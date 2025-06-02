@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="SirisDeviceManager.View.UserControls.Device.Panel.DeviceList.DeviceItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:local="clr-namespace:SirisDeviceManager.View.UserControls.Device.Panel.DeviceList"
+             mc:Ignorable="d" 
+            >
+    <Border CornerRadius="6" Margin="5" Width="130" Cursor="Hand">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseLeftButtonUp">
+                <i:InvokeCommandAction 
+                    CommandParameter="{Binding}" 
+                    Command="{Binding DataContext.SelectedDeviceCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        
+        <Border.Style>
+            <Style TargetType="Border">
+                <Setter Property="Background" Value="LightGray"/>
+                <Style.Triggers>
+                    <!-- 🔵 Playback running -->
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding IsConnected}" Value="True"/>
+                            <Condition Binding="{Binding IsRunning}" Value="True"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Background" Value="LightBlue"/>
+                    </MultiDataTrigger>
+
+                    <!-- 🟢 Default connected -->
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding IsConnected}" Value="True"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Background" Value="LightGreen"/>
+                    </MultiDataTrigger>
+
+                    <!-- 🔴 Disconnected -->
+                    <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                        <Setter Property="Background" Value="Tomato"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions >
+            
+            <!-- Device Info -->
+            <StackPanel Margin="10,5,5,5" Grid.Row="0">
+                <TextBlock Text="{Binding SerialNumber}" FontSize="18" FontWeight="Bold"  />
+                <TextBlock Text="{Binding Ip}" FontSize="13"  />
+                <TextBlock Text="{Binding Version}" FontSize="13"  />
+            </StackPanel>
+
+            <!-- Status Icons -->
+            <Border Grid.Row="1" CornerRadius="5" Background="{StaticResource colorWhite}" Padding="5" Margin="0,4,0,0">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding SessionState}" FontSize="10" Margin="0,0,0,2"  />
+                    <TextBlock Text="{Binding DownloadState}" FontSize="10" Margin="0,0,0,2" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>

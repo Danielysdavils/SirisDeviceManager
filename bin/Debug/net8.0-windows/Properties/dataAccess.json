@@ -1,0 +1,38 @@
+[
+  {
+    "Id": "1",
+    "Table": "servers",
+    "Permission": 15,
+    "TargetId": 1,
+    "SerialNumber": "Admin01"
+  },
+
+  //------------
+
+
+  {
+    "Id": "22",
+    "Table": "transmitters",
+    "Permission": 15,
+    "TargetId": 1,
+    "SerialNumber": "Admin01"
+  },
+  {
+    "Id": "23",
+    "Table": "transmitters",
+    "Permission": 15,
+    "TargetId": 2,
+    "SerialNumber": "Admin01"
+  },
+
+
+  //------------
+
+  {
+    "Id": "24",
+    "Table": "sessionTypes",
+    "Permission": 15,
+    "TargetId": 1,
+    "SerialNumber": "Admin01"
+  }
+]

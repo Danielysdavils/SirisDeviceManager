@@ -1,0 +1,11 @@
+[
+  {
+    "Id": 1,
+    "Name": "Sessão Genérica",
+    "Duration": 60,
+    "Type": "Genérica",
+    "Color": "#FF0000",
+    "TotalHours": 1.0,
+    "Image": null
+  }
+]

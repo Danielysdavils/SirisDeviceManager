@@ -1,0 +1,24 @@
+﻿[
+  {
+    "Id": 1,
+    "Name": "MTW",
+    "Enabled": true,
+    "Registration": "MTW",
+    "Login": "mtw",
+    "Password": "Senha@mtw",
+    "RoleId": 1,
+    "SerialNumber": "MtwAdm0"
+  },
+  {
+    "Id": 2,
+    "Name": "Administrador",
+    "Enabled": true,
+    "Registration": "Administrador",
+    "Login": "admin",
+    "Password": "Senha@siris",
+    "RoleId": 1,
+    "SerialNumber": "Admin01"
+      
+  }
+
+]

@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="SirisDeviceManager.View.UserControls.Device.Panel.DeviceManager.ToolBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SirisDeviceManager.View.UserControls.Device.Panel.DeviceManager"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:viewmodel="clr-namespace:SirisDeviceManager.ViewModel"
+             d:DataContext="{d:DesignInstance Type=viewmodel:SirisDeviceManagerViewModel}"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="350">
+    <StackPanel DataContext="{Binding DeviceViewModel.DevicePanelViewModel.DeviceManagerViewModel.DeviceToolbarViewModel}">
+        <Border
+        BorderBrush="{DynamicResource PrimaryHueMidBrush}"        
+        BorderThickness="1"
+        ClipToBounds="True"
+        Height="100">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Foreground="{StaticResource colorWhite}" FontSize="15" Margin="15,0,0,0" Grid.Column="0" Text="All devices" VerticalAlignment="Center"/>
+
+                    <Button
+                        Grid.Column="3"
+                        BorderBrush="{StaticResource colorOrangeLight}"
+                        Background="{StaticResource colorOrangeLight}"
+                        Visibility="{Binding RestoreVisibility}"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}">
+                        <Button.Content>
+                            <fa:IconImage Foreground="{StaticResource colorWhite}" Icon="add" Style="{StaticResource iconButtonIcon}" />
+                        </Button.Content>
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ExecutebySudoCommand}" />
+
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button
+                        Grid.Column="2"
+                        BorderBrush="{StaticResource colorOrange}"
+                        Background="{StaticResource colorOrange}"
+                        Visibility="{Binding RestoreVisibility}"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}">
+                        <Button.Content>
+                            <fa:IconImage Foreground="{StaticResource colorWhite}" Icon="Refresh" Style="{StaticResource iconButtonIcon}" />
+                        </Button.Content>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding LoadDevicesCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+
+                    <Button
+                        Grid.Column="1"
+                        BorderBrush="{StaticResource colorOrange}"
+                        Background="{StaticResource colorOrange}"
+                        Visibility="{Binding RestoreVisibility}"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}">
+                        <Button.Content>
+                            <fa:IconImage Foreground="{StaticResource colorWhite}" Icon="CloudArrowUp" Style="{StaticResource iconButtonIcon}" />
+                        </Button.Content>
+                        
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding UpdateDevicesCommand}" />
+
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Border>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,16 @@
+﻿[
+  {
+    "Id": 1,
+    "Name": "Transmissor MTW",
+    "LiveHours": 100,
+    "RemoteHours": 50,
+    "UserId": 1
+  },
+  {
+    "Id": 2,
+    "Name": "Transmissor Admin",
+    "LiveHours": 80,
+    "RemoteHours": 40,
+    "UserId": 2
+  }
+]

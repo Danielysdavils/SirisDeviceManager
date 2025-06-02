@@ -1,0 +1,71 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\barcode.png" />
+    <None Remove="Images\bg.jpg" />
+    <None Remove="Images\cpu.png" />
+    <None Remove="Images\key-icon.png" />
+    <None Remove="Images\mtw_white.png" />
+    <None Remove="Images\pattern.png" />
+    <None Remove="Images\tmHub_white.png" />
+    <None Remove="Images\user-icon.png" />
+    <None Remove="Images\user.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModel\Login\" />
+    <Folder Include="ViewModel\Network\" />
+    <Folder Include="View\UserControls\Login\" />
+    <Folder Include="View\UserControls\Network\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FontAwesome" Version="4.7.0" />
+    <PackageReference Include="FontAwesome.Sharp" Version="6.6.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.31.0" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.71.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.72.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MaterialDesignColors" Version="5.2.1" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
+    <PackageReference Include="MaterialDesignThemes.MahApps" Version="5.2.1" />
+    <PackageReference Include="SSH.NET" Version="2025.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Desktop\SirisProject_v2\SiRISApi\SiRISApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\network.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos/logging.proto" GrpcServices="Client" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\barcode.png" />
+    <Resource Include="Images\bg.jpg" />
+    <Resource Include="Images\cpu.png" />
+    <Resource Include="Images\key-icon.png" />
+    <Resource Include="Images\mtw_white.png" />
+    <Resource Include="Images\pattern.png" />
+    <Resource Include="Images\tmHub_white.png" />
+    <Resource Include="Images\user-icon.png" />
+    <Resource Include="Images\user.png" />
+  </ItemGroup>
+
+</Project>
