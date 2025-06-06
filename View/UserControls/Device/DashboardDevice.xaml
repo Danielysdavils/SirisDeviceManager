@@ -27,7 +27,7 @@
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="900"/>
+                    <ColumnDefinition Width="800"/>
                     <ColumnDefinition Width="80*" />
                 </Grid.ColumnDefinitions>
 
@@ -51,12 +51,13 @@
 
                             <StackPanel Grid.Row="0">
                                 <StackPanel Orientation="Horizontal" Height="35" Margin="15,25,0,40">
+                                    <Image Height="30" Width="100" Source="/Images/logo1.png"/>
                                     <TextBlock Margin="5,0,0,0" FontSize="11" VerticalAlignment="Center" Foreground="{StaticResource colorWhite}" Text="SiRIS DEVICE MANAGER" />
                                 </StackPanel>
                             </StackPanel>
 
                             <StackPanel Grid.Row="1" VerticalAlignment="Center" Orientation="Horizontal">
-                                <TextBlock Margin="20,0,0,0" Text="Total de devices:" Foreground="DarkGray"/>
+                                <TextBlock Margin="20,0,0,0" Text="Total de equipamentos:" Foreground="DarkGray"/>
                                 <TextBlock Margin="5,0,0,0" Foreground="DarkGray" Text="{Binding DeviceViewModel.DevicePanelViewModel.QtdDevices}"/>
                             </StackPanel>
 

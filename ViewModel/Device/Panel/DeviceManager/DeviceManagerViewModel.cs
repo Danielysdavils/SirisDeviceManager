@@ -27,6 +27,7 @@ namespace SirisDeviceManager.ViewModel.Device.Panel.DeviceManager
 
         public DevicePanelViewModel DevicePanelViewModel { get; set; }
         public ExecutebySudoModalViewModel ExecutebySudoModalViewModel { get; set; }
+        public UpdateAudioModalViewModel UpdateAudioModalViewModel { get; set; }
         public ExecuteUpdateModalViewModel ExecuteUpdateModal { get; set; }
         public DeviceToolbarViewModel DeviceToolbarViewModel { get; set; }
 
@@ -34,6 +35,7 @@ namespace SirisDeviceManager.ViewModel.Device.Panel.DeviceManager
         {
             DeviceToolbarViewModel = new(this);
             ExecuteUpdateModal = new();
+            UpdateAudioModalViewModel = new();
             ExecutebySudoModalViewModel = new();
 
             DevicePanelViewModel = devicePanelViewModel;

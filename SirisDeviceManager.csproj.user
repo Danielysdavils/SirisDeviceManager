@@ -25,6 +25,9 @@
     <Compile Update="View\UserControls\Device\Panel\DeviceManager\ToolBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\UserControls\Device\Panel\DeviceManager\UpdateAudioModal.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\UserControls\Device\Resume\DeviceCommandBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -32,6 +35,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\UserControls\Device\Resume\DeviceState.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\UserControls\Login\Login.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -63,6 +69,9 @@
     <Page Update="View\UserControls\Device\Panel\DeviceManager\ToolBar.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\UserControls\Device\Panel\DeviceManager\UpdateAudioModal.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\UserControls\Device\Resume\DeviceCommandBar.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -70,6 +79,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\UserControls\Device\Resume\DeviceState.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\UserControls\Login\Login.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

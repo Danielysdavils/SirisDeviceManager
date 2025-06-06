@@ -8,7 +8,7 @@
              xmlns:local="clr-namespace:SirisDeviceManager.View.UserControls.Device.Panel.DeviceList"
              mc:Ignorable="d" 
             >
-    <Border CornerRadius="6" Margin="5" Width="130" Cursor="Hand">
+    <Border CornerRadius="6" Margin="5" Width="200" Height="170" Cursor="Hand">
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseLeftButtonUp">
                 <i:InvokeCommandAction 
@@ -26,14 +26,26 @@
                         <MultiDataTrigger.Conditions>
                             <Condition Binding="{Binding IsConnected}" Value="True"/>
                             <Condition Binding="{Binding IsRunning}" Value="True"/>
+                            <Condition Binding="{Binding IsDownloading}" Value="False"/>
                         </MultiDataTrigger.Conditions>
                         <Setter Property="Background" Value="LightBlue"/>
+                    </MultiDataTrigger>
+
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding IsConnected}" Value="True"/>
+                            <Condition Binding="{Binding IsRunning}" Value="False"/>
+                            <Condition Binding="{Binding IsDownloading}" Value="True"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Background" Value="Orange"/>
                     </MultiDataTrigger>
 
                     <!-- 🟢 Default connected -->
                     <MultiDataTrigger>
                         <MultiDataTrigger.Conditions>
                             <Condition Binding="{Binding IsConnected}" Value="True"/>
+                            <Condition Binding="{Binding IsRunning}" Value="False"/>
+                            <Condition Binding="{Binding IsDownloading}" Value="False"/>
                         </MultiDataTrigger.Conditions>
                         <Setter Property="Background" Value="LightGreen"/>
                     </MultiDataTrigger>
@@ -48,22 +60,23 @@
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="70" />
+                <RowDefinition Height="105" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions >
             
             <!-- Device Info -->
             <StackPanel Margin="10,5,5,5" Grid.Row="0">
-                <TextBlock Text="{Binding SerialNumber}" FontSize="18" FontWeight="Bold"  />
-                <TextBlock Text="{Binding Ip}" FontSize="13"  />
-                <TextBlock Text="{Binding Version}" FontSize="13"  />
+                <TextBlock Text="{Binding SerialNumber}" FontSize="20" FontWeight="Bold"  />
+                <TextBlock Text="{Binding Name}" FontSize="15"  />
+                <TextBlock Text="{Binding Version}" FontSize="15"  />
+                <TextBlock Text="{Binding RebootStatus}" Foreground="DarkRed" FontWeight="Bold" FontSize="15" Margin="0,5,0,2"  />
             </StackPanel>
 
             <!-- Status Icons -->
             <Border Grid.Row="1" CornerRadius="5" Background="{StaticResource colorWhite}" Padding="5" Margin="0,4,0,0">
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding SessionState}" FontSize="10" Margin="0,0,0,2"  />
-                    <TextBlock Text="{Binding DownloadState}" FontSize="10" Margin="0,0,0,2" />
+                    <TextBlock Text="{Binding SessionState}" FontSize="18" Margin="0,0,0,2"  />
+                    <TextBlock Text="{Binding DownloadState}" FontSize="18" Margin="0,0,0,2" />
                 </StackPanel>
             </Border>
         </Grid>

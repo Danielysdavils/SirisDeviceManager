@@ -10,7 +10,7 @@
              d:DataContext="{d:DesignInstance Type=viewmodel:SirisDeviceManagerViewModel}"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="350">
+             d:DesignHeight="100" d:DesignWidth="450">
     <StackPanel DataContext="{Binding DeviceViewModel.DevicePanelViewModel.DeviceManagerViewModel.DeviceToolbarViewModel}">
         <Border
         BorderBrush="{DynamicResource PrimaryHueMidBrush}"        
@@ -29,12 +29,13 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Foreground="{StaticResource colorWhite}" FontSize="15" Margin="15,0,0,0" Grid.Column="0" Text="All devices" VerticalAlignment="Center"/>
+                    <TextBlock Foreground="{StaticResource colorWhite}" FontSize="15" Margin="15,0,0,0" Grid.Column="0" Text="Ferramentas" VerticalAlignment="Center"/>
 
                     <Button
-                        Grid.Column="3"
+                        Grid.Column="4"
                         BorderBrush="{StaticResource colorOrangeLight}"
                         Background="{StaticResource colorOrangeLight}"
                         Visibility="{Binding RestoreVisibility}"
@@ -46,6 +47,24 @@
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding ExecutebySudoCommand}" />
+
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+
+                    <Button
+                        Grid.Column="3"
+                        BorderBrush="{StaticResource colorOrange}"
+                        Background="{StaticResource colorOrange}"
+                        Visibility="{Binding RestoreVisibility}"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}">
+                        <Button.Content>
+                            <fa:IconImage Foreground="{StaticResource colorWhite}" Icon="Headphones" Style="{StaticResource iconButtonIcon}" />
+                        </Button.Content>
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding UpdateAudioCommand}" />
 
                             </i:EventTrigger>
                         </i:Interaction.Triggers>

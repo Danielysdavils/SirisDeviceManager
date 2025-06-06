@@ -125,3 +125,9 @@ C:\Users\mtw\Documents\SirisProject\SirisDeviceManager\SirisDeviceManager\bin\De
 C:\Users\mtw\Documents\SirisProject\SirisDeviceManager\SirisDeviceManager\bin\Debug\net8.0-windows\FontAwesome.Sharp.dll
 C:\Users\mtw\Documents\SirisProject\SirisDeviceManager\SirisDeviceManager\obj\Debug\net8.0-windows\View\UserControls\Device\Panel\DeviceManager\ExecuteUpdateModal.g.cs
 C:\Users\mtw\Documents\SirisProject\SirisDeviceManager\SirisDeviceManager\obj\Debug\net8.0-windows\View\UserControls\Device\Panel\DeviceManager\ExecuteUpdateModal.baml
+C:\Users\mtw\Documents\SirisProject\SirisDeviceManager\SirisDeviceManager\obj\Debug\net8.0-windows\SirisDeviceManager.sourcelink.json
+C:\Users\mtw\Documents\SirisProject\SirisDeviceManager\SirisDeviceManager\obj\Debug\net8.0-windows\View\UserControls\Device\Panel\DeviceManager\UpdateAudioModal.g.cs
+C:\Users\mtw\Documents\SirisProject\SirisDeviceManager\SirisDeviceManager\obj\Debug\net8.0-windows\View\UserControls\Device\Panel\DeviceManager\UpdateAudioModal.baml
+C:\Users\mtw\Documents\SirisProject\SirisDeviceManager\SirisDeviceManager\obj\Debug\net8.0-windows\View\UserControls\Login\Login.g.cs
+C:\Users\mtw\Documents\SirisProject\SirisDeviceManager\SirisDeviceManager\obj\Debug\net8.0-windows\View\UserControls\Login\Login.baml
+C:\Users\mtw\Documents\SirisProject\SirisDeviceManager\SirisDeviceManager\obj\Debug\net8.0-windows\SirisDeviceManager_Content.g.cs

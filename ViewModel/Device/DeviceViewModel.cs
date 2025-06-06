@@ -65,10 +65,10 @@ namespace SirisDeviceManager.ViewModel.Device
 
         private void UpdateDeviceLogs(object? sender, ElapsedEventArgs e)
         {
-            if(_selectedDevice != null)
+            if (_selectedDevice != null)
             {
                 var updateDevice = AppSessionManager.Instance.GetDevicebyId(_selectedDevice.SerialNumber);
-                
+
                 if (updateDevice != null)
                     DeviceResumeViewModel.UpdateLogs(updateDevice);
             }

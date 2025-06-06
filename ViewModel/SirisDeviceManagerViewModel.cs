@@ -1,6 +1,7 @@
 ﻿using SirisDeviceManager.Base;
 using SirisDeviceManager.Services;
 using SirisDeviceManager.ViewModel.Device;
+using SirisDeviceManager.ViewModel.Login;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,6 @@ namespace SirisDeviceManager.ViewModel
         {
             LOGIN = 0,
             DEVICE = 1,
-            NETWORK = 2,
         }
 
         private int _selectedIndex;
@@ -27,13 +27,17 @@ namespace SirisDeviceManager.ViewModel
         }
 
         public DeviceViewModel DeviceViewModel { get; set; }
+        public LoginViewModel LoginViewModel { get; set; }
 
         public SirisDeviceManagerViewModel()
         {
             DeviceViewModel = new();
-            SelectedIndex = 1;
+            LoginViewModel = new(this);
 
-            Init();
+            SelectedIndex = 0;
+
+            LoginViewModel.Authenticated += (s, e) => Init();
+            PageService.Instance.ChangeAppIndexEvent += ChangePage;
         }
 
         private async void Init()
@@ -45,11 +49,15 @@ namespace SirisDeviceManager.ViewModel
                 await AppSessionManager.Instance.LoadDevicesAsync();
 
                 DeviceUpdatingService.Instance.StartGettingLogs();
-                Thread.Sleep(1000);
+                await Task.Delay(1000);
 
                 DeviceViewModel.LoadDevices();
 
-            }catch(Exception ex)
+                SelectedIndex = (int)SIRISMANAGER_INDEX.DEVICE;
+                
+
+            }
+            catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }

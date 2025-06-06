@@ -31,7 +31,7 @@ namespace SirisDeviceManager.Services
             if (_cancellationTokenSource.Token.IsCancellationRequested)
                 _cancellationTokenSource = new();
 
-            Task.Run(async () => await ReceiveLogsAsync(_cancellationTokenSource.Token));
+            Task.Run(() => ReceiveLogsAsync(_cancellationTokenSource.Token));
         }
 
         public void StopGettingLogs()
@@ -55,20 +55,23 @@ namespace SirisDeviceManager.Services
                         {
                             task.Add(Task.Run(() => _loggerService.GetDeviceLog(device), token));
 
-                        } catch(Exception ex)
+                        }
+                        catch (Exception ex)
                         {
                             Console.WriteLine(ex.ToString());
                         }
                     }
 
-                    await Task.WhenAll(task);                    
+                    await Task.WhenAll(task);
                     await Task.Delay(TimeSpan.FromSeconds(3), token);
                 }
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
         }
+
     }
 }

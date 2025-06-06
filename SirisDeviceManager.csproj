@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +14,7 @@
     <None Remove="Images\bg.jpg" />
     <None Remove="Images\cpu.png" />
     <None Remove="Images\key-icon.png" />
+    <None Remove="Images\logo1.png" />
     <None Remove="Images\mtw_white.png" />
     <None Remove="Images\pattern.png" />
     <None Remove="Images\tmHub_white.png" />
@@ -21,9 +23,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModel\Login\" />
+    <Content Include="favicon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ViewModel\Network\" />
-    <Folder Include="View\UserControls\Login\" />
     <Folder Include="View\UserControls\Network\" />
   </ItemGroup>
 
@@ -61,6 +65,7 @@
     <Resource Include="Images\bg.jpg" />
     <Resource Include="Images\cpu.png" />
     <Resource Include="Images\key-icon.png" />
+    <Resource Include="Images\logo1.png" />
     <Resource Include="Images\mtw_white.png" />
     <Resource Include="Images\pattern.png" />
     <Resource Include="Images\tmHub_white.png" />

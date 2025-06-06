@@ -18,7 +18,7 @@ namespace SirisDeviceManager.Services
             get
             {
                 instance ??= new();
-                return Instance;
+                return instance;
             }
         }
 

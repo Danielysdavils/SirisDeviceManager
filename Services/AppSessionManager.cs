@@ -61,9 +61,9 @@ namespace SirisDeviceManager.Services
         {
             SirisDeviceManager.Model.Device? dev = GetDevicebyId(serialNumber);
             if(dev != null)
-            {              
-                if(dev.Logs.Count >= 500)
-                    dev.Logs.RemoveAt(0);
+            {
+                if (dev.Logs.Count >= 400)
+                    dev.Logs.Clear();
 
                 await _loggerService.ParseLog(dev, log);
                 dev.Logs.Add(log);

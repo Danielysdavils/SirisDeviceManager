@@ -10,6 +10,7 @@ using System.Net.NetworkInformation;
 using Renci.SshNet;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Renci.SshNet.Common;
 
 namespace SirisDeviceManager.Services
 {
@@ -20,12 +21,14 @@ namespace SirisDeviceManager.Services
         private SshService() { }
 
         public static SshService Instance => _instance.Value;
+        private readonly DeviceService _deviceService = new();
 
         public async Task<List<string>> ExecuteSSHCommand(List<Device> devices, string command)
         {
             MessageService.Instance.UpdateStatus($"[RUNNING COMMAND]: {command}]");
 
-            var tasks = devices.Select(async dev =>
+            List<Device> activeDevices = await _deviceService.ScanActiveDevices(devices, AppSessionStorage.Instance.Network);
+            var tasks = activeDevices.Select(async dev =>
             {
                 try
                 {
@@ -38,7 +41,7 @@ namespace SirisDeviceManager.Services
                         var result = await Task.Run(() => client.RunCommand(command));
                         MessageService.Instance.UpdateStatus($"Saída do comando: {result.Result}");
 
-                        await Task.Delay(TimeSpan.FromSeconds(120));
+                        await Task.Delay(TimeSpan.FromSeconds(5));
 
                         client.Disconnect();
                         return result.Result;
@@ -55,79 +58,113 @@ namespace SirisDeviceManager.Services
             return (await Task.WhenAll(tasks)).ToList();
         }
 
+        public async Task<bool> TryConnectWithTimeoutAsync(SshClient client, int timeoutMilliseconds)
+        {
+            try
+            {
+                var connectTask = Task.Run(() =>
+                {
+                    try
+                    {
+                        client.Connect();
+                    }
+                    catch (Exception)
+                    {
+                        // Suprime a exceção dentro da task
+                        throw new InvalidOperationException("SSH connection failed");
+                    }
+                });
+
+                if (await Task.WhenAny(connectTask, Task.Delay(timeoutMilliseconds)) == connectTask)
+                {
+                    await connectTask; // Propaga exceção se aconteceu dentro da task
+                    return true; // Conectado com sucesso
+                }
+                else
+                {
+                    return false; // Timeout
+                }
+            }
+            catch (Exception)
+            {
+                // Aqui captura qualquer erro (host não conhecido, rede, etc.)
+                return false;
+            }
+        }
+
         public async Task UpdateAllDevices(List<Device> devices)
         {
-            int maxConcurrency = 5;
-            var options = new ParallelOptions {  MaxDegreeOfParallelism = maxConcurrency };
             var logLock = new Object();
 
             MessageService.Instance.UpdateStatus("[INFO] Starting parallel SSH execution...\n");
 
-            await Task.Run(() =>
+            List<Device> activeDevices = await _deviceService.ScanActiveDevices(devices, AppSessionStorage.Instance.Network);
+
+            var tasks = activeDevices.Select(async dev =>
             {
-                Parallel.ForEach(devices, options, dev =>
+                try
                 {
-                    try
+                    lock (logLock)
                     {
-                        Console.WriteLine(dev.SerialNumber);
+                        MessageService.Instance.UpdateStatus($"[INFO] Connecting to {dev.SerialNumber}...");
+                    }
+                    
+                    await Task.Delay(200);
 
-                        lock(logLock)
+                    using (var client = new SshClient(dev.Ip, dev.User, dev.Password))
+                    {
+                        client.Connect();
+
+                        var shell = client.CreateShellStream("xterm", 80, 24, 800, 600, 1024);
+                        shell.WriteLine("cd /home/pi/_Configs && ./update.sh");
+
+                        var buffer = new byte[4096];
+                        TimeSpan inactivityTimeout = TimeSpan.FromSeconds(1000);
+                        DateTime lasDataReceived = DateTime.Now;
+
+                        while (client.IsConnected)
                         {
-                            MessageService.Instance.UpdateStatus($"[INFO] Connecting to {dev.SerialNumber}...");
-                        }
+                            bool dataRead = false;
 
-                        using (var client = new SshClient(dev.Ip, dev.User, dev.Password))
-                        {
-                            client.Connect();
-                            var shell = client.CreateShellStream("xterm", 80, 24, 800, 600, 1024);
-                            shell.WriteLine("cd /home/pi/_Configs && ./update.sh");
-
-                            var buffer = new byte[4096];
-                            TimeSpan inactivityTimeout = TimeSpan.FromSeconds(15);
-                            DateTime lasDataReceived = DateTime.Now;
-
-                            while(client.IsConnected)
+                            if (shell.DataAvailable)
                             {
-                                bool dataRead = false;
-
-                                if (shell.DataAvailable)
+                                int count = shell.Read(buffer, 0, buffer.Length);
+                                if (count > 0)
                                 {
-                                    int count = shell.Read(buffer, 0, buffer.Length);
-                                    if (count > 0)
-                                    {
-                                        var output = Encoding.UTF8.GetString(buffer, 0, count);
-                                        lasDataReceived = DateTime.Now;
-                                        dataRead = true;       
+                                    var output = Encoding.UTF8.GetString(buffer, 0, count);
+                                    lasDataReceived = DateTime.Now;
+                                    dataRead = true;
 
-                                        lock (logLock)
-                                        {
-                                            MessageService.Instance.UpdateStatus($"[{dev.SerialNumber}] {output}");
-                                        }
+                                    lock (logLock)
+                                    {
+                                        MessageService.Instance.UpdateStatus($"[{dev.SerialNumber}] {output}");
                                     }
                                 }
-                                
-                                if(!dataRead && DateTime.Now - lasDataReceived > inactivityTimeout)
-                                {
-                                    break;
-                                }
-
-                                Thread.Sleep(100);
                             }
 
-                            client.Disconnect();
-                       
+                            if (!dataRead && DateTime.Now - lasDataReceived > inactivityTimeout)
+                            {
+                                break;
+                            }
+
+                            await Task.Delay(100);
                         }
-                       
+
+                        client.Disconnect();
                     }
-                    catch (Exception ex)
+
+                }
+                catch (Exception ex)
+                {
+                    lock (logLock)
                     {
-                        lock(logLock)
-                        {
-                            MessageService.Instance.UpdateStatus($"[ERROR] {dev.SerialNumber}: {ex.Message}");
-                        }
+                        MessageService.Instance.UpdateStatus($"[ERROR] {dev.SerialNumber}: {ex.Message}");
                     }
-                });
+                }
             });
+
+            await Task.WhenAll(tasks);
+            MessageService.Instance.UpdateStatus($"[RUNNING COMMAND]: EXIT PROCESS]");
         }
     }
 }

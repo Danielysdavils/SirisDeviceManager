@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodel="clr-namespace:SirisDeviceManager.ViewModel"
         xmlns:device="clr-namespace:SirisDeviceManager.View.UserControls.Device"
+        xmlns:login="clr-namespace:SirisDeviceManager.View.UserControls.Login"
         xmlns:local="clr-namespace:SirisDeviceManager"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Background="{StaticResource colorDarkBlue}"
         Title="MainWindow" Width="1280" Height="760"
@@ -28,7 +30,15 @@
             </Border.Background>
 
             <Grid>
-                <device:DashboardDevice DataContext="{StaticResource vm}" />
+                <materialDesign:Transitioner Grid.Row="0" AutoApplyTransitionOrigins="True" SelectedIndex="{Binding SelectedIndex}">
+                    <materialDesign:TransitionerSlide OpeningEffect="{materialDesign:TransitionEffect FadeIn}">
+                        <login:Login DataContext="{StaticResource vm}"/>
+                    </materialDesign:TransitionerSlide>
+
+                    <materialDesign:TransitionerSlide OpeningEffect="{materialDesign:TransitionEffect FadeIn}">
+                        <device:DashboardDevice DataContext="{StaticResource vm}" />
+                    </materialDesign:TransitionerSlide>
+                </materialDesign:Transitioner>
             </Grid>
         </Border>
     </Border>

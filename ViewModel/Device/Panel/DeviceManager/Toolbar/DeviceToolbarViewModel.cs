@@ -21,17 +21,24 @@ namespace SirisDeviceManager.ViewModel.Device.Panel.DeviceManager.Toolbar
             //commands
             LoadDevicesCommand = new RelayCommand<object>(_ => LoadDevices());
             ExecutebySudoCommand = new RelayCommand<object>(_ => ExecutebySudo());
+            UpdateAudioCommand = new RelayCommand<object>(_ => UpdateAudio()); 
             UpdateDevicesCommand = new RelayCommand<object>(_ => UpdateDevices());
         }
 
         public ICommand LoadDevicesCommand { get; }
         public ICommand UpdateDevicesCommand { get; }
         public ICommand ExecutebySudoCommand { get; }
+        public ICommand UpdateAudioCommand { get; }
 
         //functions
         public void LoadDevices()
         {
             _viewModel.LoadDevices();
+        }
+
+        public void UpdateAudio()
+        {
+            _viewModel.ShowModal(new UpdateAudioModal());
         }
 
         public void UpdateDevices()

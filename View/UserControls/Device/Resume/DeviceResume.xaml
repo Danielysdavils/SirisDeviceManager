@@ -11,7 +11,7 @@
              mc:Ignorable="d" 
              >
     <Border>
-        <Grid Margin="15,10,10,10" DataContext="{Binding DeviceViewModel.DeviceResumeViewModel}">
+        <Grid x:Name="RootGrid" Margin="15,10,10,10" DataContext="{Binding DeviceViewModel.DeviceResumeViewModel}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="*"/>
@@ -20,7 +20,7 @@
 
             <Grid Grid.Row="0" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="300*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
@@ -31,30 +31,50 @@
                                 <fa:IconImage Margin="15,0,10,0" Icon="Hive" Width="20" Height="20" Foreground="{StaticResource colorDarkBlue}" />
                                 <TextBlock
                                  VerticalAlignment="Center"
-                                 FontSize="15"
+                                 FontSize="23"
                                  FontWeight="Bold"
                                  Foreground="{StaticResource colorDarkBlue}" 
-                                 Text="Serial Number: "/>
+                                 Text="Número de série: "/>
                                 <TextBlock
                                 VerticalAlignment="Center"
-                                FontSize="15"
+                                FontSize="23"
                                 FontWeight="Bold"
                                 Foreground="{StaticResource colorDarkBlue}"  
                                 Text="{Binding SerialNumber}"/>
                             </StackPanel>
 
                             <StackPanel Height="40" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
-                                <fa:IconImage Margin="35,0,10,0" Icon="CaretRight" Width="20" Height="10" Foreground="{StaticResource colorDarkBlue}" />
-                                <TextBlock
-                                VerticalAlignment="Center"
-                                FontWeight="Bold"
-                                Foreground="{StaticResource colorDarkBlue}" 
-                                Text="Ip: "/>
-                                <TextBlock
-                                FontWeight="Bold"
-                                VerticalAlignment="Center"
-                                Foreground="{StaticResource colorDarkBlue}" 
-                                Text="{Binding Ip}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Margin="20,0,10,0" Icon="CaretRight" Width="20" Height="10" Foreground="{StaticResource colorDarkBlue}" />
+                                    <TextBlock
+                                        FontSize="20"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Foreground="{StaticResource colorDarkBlue}" 
+                                        Text="Ip: "/>
+                                    <TextBlock
+                                        FontSize="20"
+                                        FontWeight="Bold"
+                                        VerticalAlignment="Center"
+                                        Foreground="{StaticResource colorDarkBlue}" 
+                                        Text="{Binding Ip}"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Margin="15,0,10,0" Icon="CaretRight" Width="20" Height="10" Foreground="{StaticResource colorDarkBlue}" />
+                                    <TextBlock
+                                        FontSize="20"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Foreground="{StaticResource colorDarkBlue}" 
+                                        Text="Nome equipamento: "/>
+                                    <TextBlock
+                                        FontSize="20"
+                                        FontWeight="Bold"
+                                        VerticalAlignment="Center"
+                                        Foreground="{StaticResource colorDarkBlue}" 
+                                        Text="{Binding Name}"/>
+                                </StackPanel>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
@@ -62,7 +82,7 @@
             </Grid>
            
             <Border Margin="5,5,5,5" CornerRadius="20" Grid.Row="1" >
-                <ListBox ItemsSource="{Binding Logs}">
+                <!--<ListBox ItemsSource="{Binding Logs}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel IsItemsHost="True" Orientation="Vertical" />
@@ -80,12 +100,22 @@
                             </ListBoxItem>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                </ListBox>
+                </ListBox>-->
+
+                <TextBox x:Name="MessagesTextBox"
+                     Loaded="MessagesTextBox_Loaded"
+                     Grid.Column="1"
+                     FontSize="20"
+                     Text="{Binding AllMessages, Mode=OneWay}"
+                     TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto"
+                     AcceptsReturn="True"
+                     IsReadOnly="True" />
             </Border>
 
             <StackPanel Orientation="Horizontal" Grid.Row="2">
-                <StackPanel>
-                    <TextBlock Margin="0,0,10,0" Foreground="{StaticResource colorDarkBlue}" VerticalAlignment="Center" Text="Delete device logs " />
+                <StackPanel >
+                    <TextBlock Margin="0,0,10,0" Foreground="{StaticResource colorDarkBlue}" VerticalAlignment="Center" Text="Apagar logs" />
                     <Button
                         BorderBrush="{StaticResource colorDarkBlue}"
                         Background="{StaticResource colorDarkBlue}"
@@ -105,19 +135,60 @@
                 </StackPanel>
 
                 <StackPanel>
-                    <TextBlock Margin="0,0,10,0" Foreground="{StaticResource colorDarkBlue}" VerticalAlignment="Center" Text="Reboot " />
+                    <TextBlock Margin="0,0,10,0" Foreground="{StaticResource colorDarkBlue}" VerticalAlignment="Center" Text="Reiniciar equipamento" />
                     <Button
                         BorderBrush="{StaticResource colorDarkBlue}"
                         Background="{StaticResource colorDarkBlue}"
                         Visibility="{Binding RestoreVisibility}"
-                        Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}">   
+                        Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}">
                         <Button.Content>
-                            <fa:IconImage Foreground="{StaticResource colorWhite}" Icon="Trash" Style="{StaticResource iconButtonIcon}" />
+                            <fa:IconImage Foreground="{StaticResource colorWhite}" Icon="Sync" Style="{StaticResource iconButtonIcon}" />
                         </Button.Content>
 
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding DeleteLogsCommand}" />
+                                <i:InvokeCommandAction Command="{Binding RebootDeviceCommand}" />
+
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </StackPanel>
+
+                <!--<StackPanel>
+                    <TextBlock Margin="0,0,10,0" Foreground="{StaticResource colorDarkBlue}" VerticalAlignment="Center" Text="Atualizar equipamento" />
+                    <Button
+                        BorderBrush="{StaticResource colorDarkBlue}"
+                        Background="{StaticResource colorDarkBlue}"
+                        Visibility="{Binding RestoreVisibility}"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}">
+                        <Button.Content>
+                            <fa:IconImage Foreground="{StaticResource colorWhite}" Icon="Upload" Style="{StaticResource iconButtonIcon}" />
+                        </Button.Content>
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding UpdateDeviceCommand}" />
+
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </StackPanel>-->
+
+                <StackPanel>
+                    <TextBlock Margin="0,0,10,0" Foreground="{StaticResource colorDarkBlue}" VerticalAlignment="Center" Text="Reiniciar servicio" />
+                    <Button
+                        BorderBrush="{StaticResource colorDarkBlue}"
+                        Background="{StaticResource colorDarkBlue}"
+                        Visibility="{Binding RestoreVisibility}"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}">
+                        <Button.Content>
+                            <fa:IconImage Foreground="{StaticResource colorWhite}" Icon="Sync" Style="{StaticResource iconButtonIcon}" />
+                        </Button.Content>
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ReestartRaspRunCommand}" />
+
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Button>

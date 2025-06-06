@@ -22,12 +22,8 @@ namespace SirisDeviceManager.Services
 
             try
             {
-               List<string> networkIps = await ScaneNetworkAsyn(net);
-               if (networkIps.Count <= 0)
-                   return localDevices;
-
                 List<SiRISApi.Models.ReceiverEquipment> devicesActivos = await _context.ReceiverEquipments
-                    .Where(d => networkIps.Contains(d.Ip))
+                    //.Where(d => networkIps.Contains(d.Ip))
                     .ToListAsync();
 
                 if(devicesActivos.Count <= 0) 
@@ -41,6 +37,15 @@ namespace SirisDeviceManager.Services
                 Console.WriteLine(ex.ToString());
                 return localDevices;
             }
+        }
+
+        public async Task<List<Device>> ScanActiveDevices(List<Device> devices, Network net)
+        {
+            List<string> networkIps = await ScaneNetworkAsyn(net);
+            if (networkIps.Count <= 0)
+                return devices;
+
+            return devices.Where(d => networkIps.Contains(d.Ip)).ToList();
         }
 
         private static async Task<List<string>> ScaneNetworkAsyn(Network network)
