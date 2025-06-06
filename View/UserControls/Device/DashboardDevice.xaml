@@ -53,6 +53,7 @@
                                 <StackPanel Orientation="Horizontal" Height="35" Margin="15,25,0,40">
                                     <Image Height="30" Width="100" Source="/Images/logo1.png"/>
                                     <TextBlock Margin="5,0,0,0" FontSize="11" VerticalAlignment="Center" Foreground="{StaticResource colorWhite}" Text="SiRIS DEVICE MANAGER" />
+                                    <TextBlock Margin="5,0,0,0" FontSize="11" VerticalAlignment="Center" Foreground="{StaticResource colorWhite}" Text="v0.0.1" />
                                 </StackPanel>
                             </StackPanel>
 
