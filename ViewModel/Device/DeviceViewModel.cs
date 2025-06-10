@@ -53,7 +53,7 @@ namespace SirisDeviceManager.ViewModel.Device
             _selectedDevice = dev;
             _updateTimer.Stop();
 
-            _updateTimer.Interval = 5000;
+            _updateTimer.Interval = 1000;
             _updateTimer.Start();
         }
 

@@ -72,6 +72,13 @@ namespace SirisDeviceManager.ViewModel.Device.Panel.DeviceList
             set => SetProperty(ref _downloadState, value);
         }
 
+        private int _downloadProgress = 0;
+        public int DownloadProgress
+        {
+            get => _downloadProgress;
+            set => SetProperty(ref _downloadProgress, value);
+        }
+
         private bool _isConnected = false;
         public bool IsConnected
         {
@@ -101,12 +108,15 @@ namespace SirisDeviceManager.ViewModel.Device.Panel.DeviceList
             Ip = device.Ip;
             Version = device.Version;
             IsConnected = device.IsConnected;
-            IsRunning = device.IsRunning;
-            IsDownloading = device.DownloadState == Model.DownloadState.DOWNLOADING ? true : false;
-            SessionState = GetState(device.SessionState, device.SessionId);
-            DownloadState = GetDownloadState(device.DownloadState);
+            
+            IsRunning = device.Session.IsRunning;
+            IsDownloading = device.Download.DownloadState == Model.DownloadState.DOWNLOADING ? true : false;
+            SessionState = GetState(device.Session.SessionState, device.Session.SessionId);
+            
+            DownloadProgress = device.Download.DownloadProgress;
+            DownloadState = GetDownloadState(device.Download.DownloadState);
 
-            UpdateRebootState(device.IsRebootScheduled, device.RebootCountDown);
+            UpdateRebootState(device.Reboot.IsRebootScheduled, device.Reboot.RebootCountDown);
         }
 
         private void UpdateRebootState(bool isSchedule, TimeSpan countdown)

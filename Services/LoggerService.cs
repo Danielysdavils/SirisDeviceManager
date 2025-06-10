@@ -67,6 +67,9 @@ namespace SirisDeviceManager.Services
                 //Parse download session files state: any/error/compleated/downloading 
                 GetDownloadState(device, log);
 
+                //Parse download session files state: int value
+                GetDownloadProgress(device, log);
+
                 //Parse session state: any/waiting/running_files/running_streaming
                 GetSessionState(device, log);
 
@@ -99,8 +102,8 @@ namespace SirisDeviceManager.Services
             {
                 if (double.TryParse(scheduleMatch.Groups[1].Value, out double minutes))
                 {
-                    device.IsRebootScheduled = true;
-                    device.RebootCountDown = TimeSpan.FromMinutes(minutes);
+                    device.Reboot.IsRebootScheduled = true;
+                    device.Reboot.RebootCountDown = TimeSpan.FromMinutes(minutes);
                 }
                 return;
             }
@@ -112,8 +115,8 @@ namespace SirisDeviceManager.Services
                 if (int.TryParse(rebootingMatch.Groups[1].Value, out int minutes) &&
                     int.TryParse(rebootingMatch.Groups[2].Value, out int seconds))
                 {
-                    device.IsRebootScheduled = true;
-                    device.RebootCountDown = new TimeSpan(0, minutes, seconds);
+                    device.Reboot.IsRebootScheduled = true;
+                    device.Reboot.RebootCountDown = new TimeSpan(0, minutes, seconds);
                 }
                 return;
             }
@@ -124,8 +127,8 @@ namespace SirisDeviceManager.Services
             // [INFO] All reboot tasks canceled.
             if (Regex.IsMatch(log, @"(Canceling reboot|Reboot canceled|was cancelled canceling reboot|All reboot tasks canceled)", RegexOptions.IgnoreCase))
             {
-                device.IsRebootScheduled = false;
-                device.RebootCountDown = TimeSpan.Zero;
+                device.Reboot.IsRebootScheduled = false;
+                device.Reboot.RebootCountDown = TimeSpan.Zero;
                 return;
             }
 
@@ -135,8 +138,8 @@ namespace SirisDeviceManager.Services
             {
                 if (double.TryParse(keepMatch.Groups[1].Value, out double minutes))
                 {
-                    device.IsRebootScheduled = true;
-                    device.RebootCountDown = TimeSpan.FromMinutes(minutes);
+                    device.Reboot.IsRebootScheduled = true;
+                    device.Reboot.RebootCountDown = TimeSpan.FromMinutes(minutes);
                 }
                 return;
             }
@@ -144,8 +147,8 @@ namespace SirisDeviceManager.Services
             // [INFO] Rebooting now for session {session.Id}!
             if (Regex.IsMatch(log, @"Rebooting now", RegexOptions.IgnoreCase))
             {
-                device.IsRebootScheduled = false;
-                device.RebootCountDown = TimeSpan.Zero;
+                device.Reboot.IsRebootScheduled = false;
+                device.Reboot.RebootCountDown = TimeSpan.Zero;
                 return;
             }
 
@@ -166,19 +169,19 @@ namespace SirisDeviceManager.Services
         {
             var regex = new Regex(@"\[.*\]\s+RaspRun\s+\[RUNNING\]\s+-\s+Running session .*", RegexOptions.IgnoreCase);
             if (regex.IsMatch(log))
-                device.IsRunning = true;
+                device.Session.IsRunning = true;
 
             var endedRegex = new Regex(@"\[.*\]\s+RaspRun\s+\[INFO\]\s+-\s+Session .* has ended externally\. Killing playback\.", RegexOptions.IgnoreCase);
             if (endedRegex.IsMatch(log))
-                device.IsRunning = false;
+                device.Session.IsRunning = false;
 
             var endRegex2 = new Regex(@"\[INFO\]\s+Session .* has ended\. Stopping (outro|stream) loop\.", RegexOptions.IgnoreCase);
             var endRegex3 = new Regex(@"Stream playback ended early\. Restarting for session .*", RegexOptions.IgnoreCase);
             if (endRegex2.IsMatch(log) || endRegex3.IsMatch(log))
-                device.IsRunning = false;
+                device.Session.IsRunning = false;
 
             if (log.Contains("Stream playback ended") || log.Contains("Playback complete"))
-                device.IsRunning = false;
+                device.Session.IsRunning = false;
         }
 
         private void GetSessionId(SirisDeviceManager.Model.Device device, string log)
@@ -188,14 +191,14 @@ namespace SirisDeviceManager.Services
 
             if (match.Success)
             {
-                device.SessionId = match.Groups[2].Value;
+                device.Session.SessionId = match.Groups[2].Value;
             }
         }
 
         private void GetSessionState(SirisDeviceManager.Model.Device device, string log)
         {
             if (string.IsNullOrWhiteSpace(log))
-                device.SessionState = SessionState.SESSION_ANY;
+                device.Session.SessionState = SessionState.SESSION_ANY;
 
             // Caso: [INFO] - Found: {int} sessions of this device
             var foundSessionsRegex = new Regex(@"\[INFO\]\s+-\s+Found:\s+(\d+)\s+sessions of this device", RegexOptions.IgnoreCase);
@@ -203,67 +206,82 @@ namespace SirisDeviceManager.Services
             if (matchFound.Success && int.TryParse(matchFound.Groups[1].Value, out int count))
             {
                 if (count == 0)
-                    device.SessionState = SessionState.SESSION_ANY;
+                    device.Session.SessionState = SessionState.SESSION_ANY;
                 else
-                    device.SessionState = SessionState.SESSION_EXIST_WAITING;
+                    device.Session.SessionState = SessionState.SESSION_EXIST_WAITING;
             }
 
             var regexFiles = new Regex(@"\[.*\]\s+RaspRun\s+\[RUNNING\]\s+-\s+Running session files .* - .*", RegexOptions.IgnoreCase);
             var regexStream = new Regex(@"\[.*\]\s+RaspRun\s+\[RUNNING\]\s+-\s+Running session streaming .* - .*", RegexOptions.IgnoreCase);
 
             if (regexFiles.IsMatch(log))
-                device.SessionState = SessionState.SESSION_EXIST_RUNNING_FILES;
+                device.Session.SessionState = SessionState.SESSION_EXIST_RUNNING_FILES;
             
             else if (regexStream.IsMatch(log))
-                device.SessionState = SessionState.SESSION_EXIST_RUNNING_STREAM;
+                device.Session.SessionState = SessionState.SESSION_EXIST_RUNNING_STREAM;
             
             // Caso: [RUNNING] - Starting session
             var regexVLC = new Regex(@"Starting VLC for session .* with .* item\(s\)", RegexOptions.IgnoreCase);
             var regexMPV = new Regex(@"\[INFO\] Stream playback started via MPV for session .*", RegexOptions.IgnoreCase);
             if (regexVLC.IsMatch(log) || regexMPV.IsMatch(log))
-                device.SessionState = SessionState.SESSION_EXIST_RUNNING_FILES;
+                device.Session.SessionState = SessionState.SESSION_EXIST_RUNNING_FILES;
 
             // Caso: [INFO] - Finished playing: {some file name}
             var finishedPlayingRegex = new Regex(@"\[INFO\]\s+-\s+Finished playing:", RegexOptions.IgnoreCase);
             if (finishedPlayingRegex.IsMatch(log))
-                device.SessionState = SessionState.SESSION_ANY;
+                device.Session.SessionState = SessionState.SESSION_ANY;
 
             // Caso: Starting streaming playback
             var streamingStartRegex = new Regex(@"Starting streaming playback for session", RegexOptions.IgnoreCase);
             if (streamingStartRegex.IsMatch(log))
-                device.SessionState = SessionState.SESSION_EXIST_RUNNING_STREAM;
+                device.Session.SessionState = SessionState.SESSION_EXIST_RUNNING_STREAM;
 
             // Caso: Sessão terminou
             var sessionEndedRegex = new Regex(@"Session\s+\d+\s+has ended\. Stopping stream loop", RegexOptions.IgnoreCase);
             var sessionEnded2 = new Regex(@"Stream playback ended early", RegexOptions.IgnoreCase);
             if (sessionEndedRegex.IsMatch(log) || sessionEnded2.IsMatch(log))
-                device.SessionState = SessionState.SESSION_ANY;
+                device.Session.SessionState = SessionState.SESSION_ANY;
         }
 
         private void GetDownloadState(SirisDeviceManager.Model.Device device, string log)
         {
             if (string.IsNullOrWhiteSpace(log))
-                device.DownloadState = DownloadState.DOWNLOAD_ANY;
+                device.Download.DownloadState = DownloadState.DOWNLOAD_ANY;
 
             var downloadingRegex = new Regex(@"\[DOWNLOAD\] - Downloading missing file:", RegexOptions.IgnoreCase);
             if (downloadingRegex.IsMatch(log))
-                device.DownloadState = DownloadState.DOWNLOADING;
+                device.Download.DownloadState = DownloadState.DOWNLOADING;
 
             var completedRegex = new Regex(@"\[INFO\]\s+-\s+\[INFO\]\s+Download completed for fileId=", RegexOptions.IgnoreCase);
             if (completedRegex.IsMatch(log))
-                device.DownloadState = DownloadState.DOWLOAD_COMPLEATED;
+                device.Download.DownloadState = DownloadState.DOWLOAD_COMPLEATED;
 
             var errorRegex = new Regex(@"\[(WARNING|ERROR)\].*(Delete failed|Download error|Failed to delete)", RegexOptions.IgnoreCase);
             if (errorRegex.IsMatch(log))
-                device.DownloadState = DownloadState.DOWNLOAD_ERROR;
+                device.Download.DownloadState = DownloadState.DOWNLOAD_ERROR;
 
             var foundSessionsRegex = new Regex(@"\[INFO\]\s+-\s+Found:\s+(\d+)\s+sessions of this device", RegexOptions.IgnoreCase);
             var match = foundSessionsRegex.Match(log);
             if (match.Success && int.TryParse(match.Groups[1].Value, out int sessionCount) && sessionCount == 0)
-                device.DownloadState = DownloadState.DOWNLOAD_ANY;
+                device.Download.DownloadState = DownloadState.DOWNLOAD_ANY;
 
             if (Regex.IsMatch(log, @"\[SYNC\]\s*-\s*File already exists:", RegexOptions.IgnoreCase))
-                device.DownloadState = DownloadState.DOWLOAD_COMPLEATED;
+                device.Download.DownloadState = DownloadState.DOWLOAD_COMPLEATED;
+        }
+
+        private void GetDownloadProgress(SirisDeviceManager.Model.Device device, string log)
+        {
+            var match = Regex.Match(log, @"RaspRun\s+\[DOWNLOAD\]\s+-\s+Download progress:\s+(\d+,\d+)%");
+            if (match.Success)
+            {
+                var progressStr = match.Groups[1].Value;
+
+                // Converte a vírgula para ponto para parsear corretamente com InvariantCulture
+                if (double.TryParse(progressStr.Replace(',', '.'), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out double progress))
+                {
+                    device.Download.DownloadProgress = (int)Math.Round(progress);
+                }
+            }
         }
 
         private void GetDeviceState(SirisDeviceManager.Model.Device device, string log)

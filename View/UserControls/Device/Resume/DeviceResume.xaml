@@ -80,28 +80,8 @@
                     </StackPanel>
                 </Border>
             </Grid>
-           
+
             <Border Margin="5,5,5,5" CornerRadius="20" Grid.Row="1" >
-                <!--<ListBox ItemsSource="{Binding Logs}">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel IsItemsHost="True" Orientation="Vertical" />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <ListBoxItem>
-                                <TextBlock
-                                     VerticalAlignment="Center"
-                                     FontSize="15"
-                                     Foreground="{StaticResource colorBlack}"  
-                                     Text="{Binding}"/>
-                            </ListBoxItem>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>-->
-
                 <TextBox x:Name="MessagesTextBox"
                      Loaded="MessagesTextBox_Loaded"
                      Grid.Column="1"
@@ -153,26 +133,6 @@
                         </i:Interaction.Triggers>
                     </Button>
                 </StackPanel>
-
-                <!--<StackPanel>
-                    <TextBlock Margin="0,0,10,0" Foreground="{StaticResource colorDarkBlue}" VerticalAlignment="Center" Text="Atualizar equipamento" />
-                    <Button
-                        BorderBrush="{StaticResource colorDarkBlue}"
-                        Background="{StaticResource colorDarkBlue}"
-                        Visibility="{Binding RestoreVisibility}"
-                        Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}">
-                        <Button.Content>
-                            <fa:IconImage Foreground="{StaticResource colorWhite}" Icon="Upload" Style="{StaticResource iconButtonIcon}" />
-                        </Button.Content>
-
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding UpdateDeviceCommand}" />
-
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-                </StackPanel>-->
 
                 <StackPanel>
                     <TextBlock Margin="0,0,10,0" Foreground="{StaticResource colorDarkBlue}" VerticalAlignment="Center" Text="Reiniciar servicio" />

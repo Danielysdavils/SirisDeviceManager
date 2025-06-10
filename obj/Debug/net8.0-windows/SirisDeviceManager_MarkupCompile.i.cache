@@ -12,7 +12,7 @@ TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\mtw\Documents\SirisProject\SirisDeviceManager\SirisDeviceManager\App.xaml
 14-572542252
 1-913308027
-49-11245001
+52-2013084207
 384-779924839
 Styles\ButtonStyles.xaml;Styles\UIColors.xaml;View\MainWindow.xaml;View\UserControls\Device\DashboardDevice.xaml;View\UserControls\Device\Panel\DeviceList\DeviceItem.xaml;View\UserControls\Device\Panel\DeviceList\DeviceList.xaml;View\UserControls\Device\Panel\DeviceManager\ExecutebySudoModal.xaml;View\UserControls\Device\Panel\DeviceManager\ExecuteUpdateModal.xaml;View\UserControls\Device\Panel\DeviceManager\ToolBar.xaml;View\UserControls\Device\Panel\DeviceManager\UpdateAudioModal.xaml;View\UserControls\Device\Resume\DeviceCommandBar.xaml;View\UserControls\Device\Resume\DeviceResume.xaml;View\UserControls\Device\Resume\DeviceState.xaml;View\UserControls\Login\Login.xaml;
 

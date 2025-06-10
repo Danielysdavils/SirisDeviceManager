@@ -23,7 +23,6 @@ namespace SirisDeviceManager.Services
             try
             {
                 List<SiRISApi.Models.ReceiverEquipment> devicesActivos = await _context.ReceiverEquipments
-                    //.Where(d => networkIps.Contains(d.Ip))
                     .ToListAsync();
 
                 if(devicesActivos.Count <= 0) 
