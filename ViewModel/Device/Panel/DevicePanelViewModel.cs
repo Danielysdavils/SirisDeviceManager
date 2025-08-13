@@ -12,7 +12,6 @@ namespace SirisDeviceManager.ViewModel.Device.Panel
 {
     public class DevicePanelViewModel : BaseViewModel
     {
-
         private int _qtdDevices = 0;
         public int QtdDevices
         {

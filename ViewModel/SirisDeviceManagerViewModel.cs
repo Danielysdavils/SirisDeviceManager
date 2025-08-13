@@ -54,8 +54,6 @@ namespace SirisDeviceManager.ViewModel
                 DeviceViewModel.LoadDevices();
 
                 SelectedIndex = (int)SIRISMANAGER_INDEX.DEVICE;
-                
-
             }
             catch(Exception ex)
             {
