@@ -54,7 +54,6 @@ namespace SirisDeviceManager.Services
                         try
                         {
                             task.Add(Task.Run(() => _loggerService.GetDeviceLog(device), token));
-
                         }
                         catch (Exception ex)
                         {

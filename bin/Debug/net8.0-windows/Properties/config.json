@@ -1,6 +1,6 @@
 {
   "id": 1,
-  "server": "172.233.24.100",
+  "server": "172.16.2.196",
   "database": "SiRIS",
   "user": "sa",
   "password": "Senha@mtw"
