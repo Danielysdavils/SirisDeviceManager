@@ -63,7 +63,8 @@ namespace SirisDeviceManager.View.UserControls.Device {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/SirisDeviceManager;component/view/usercontrols/device/dashboarddevice.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/SirisDeviceManager;V1.0.0.0;component/view/usercontrols/device/dashboarddevice.x" +
+                    "aml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\..\View\UserControls\Device\DashboardDevice.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

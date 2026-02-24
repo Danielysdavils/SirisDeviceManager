@@ -55,8 +55,8 @@ namespace SirisDeviceManager.View.UserControls.Device.Panel.DeviceList {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/SirisDeviceManager;component/view/usercontrols/device/panel/devicelist/devicelis" +
-                    "t.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/SirisDeviceManager;V1.0.0.0;component/view/usercontrols/device/panel/devicelist/" +
+                    "devicelist.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\..\..\..\View\UserControls\Device\Panel\DeviceList\DeviceList.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

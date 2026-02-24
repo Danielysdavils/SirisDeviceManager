@@ -54,7 +54,8 @@ namespace SirisDeviceManager.View.UserControls.Device.Resume {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/SirisDeviceManager;component/view/usercontrols/device/resume/devicestate.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/SirisDeviceManager;V1.0.0.0;component/view/usercontrols/device/resume/devicestat" +
+                    "e.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\..\..\View\UserControls\Device\Resume\DeviceState.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

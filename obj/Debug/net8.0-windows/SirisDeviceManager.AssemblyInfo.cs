@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SirisDeviceManager")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8efdf1ee308bee68bda86557de51e7e996e0b00e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+69f72a8fa28dfd99971290d01b498c61eabdd405")]
 [assembly: System.Reflection.AssemblyProductAttribute("SirisDeviceManager")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SirisDeviceManager")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -87,7 +87,7 @@ namespace SirisDeviceManager.View.UserControls.Login {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/SirisDeviceManager;component/view/usercontrols/login/login.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/SirisDeviceManager;V1.0.0.0;component/view/usercontrols/login/login.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\..\View\UserControls\Login\Login.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
