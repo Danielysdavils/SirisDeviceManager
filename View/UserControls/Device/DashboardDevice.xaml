@@ -62,9 +62,9 @@
                                 <TextBlock Margin="5,0,0,0" Foreground="DarkGray" Text="{Binding DeviceViewModel.DevicePanelViewModel.QtdDevices}"/>
                             </StackPanel>
 
-                            <StackPanel Grid.Row="2">
+                            <Grid Grid.Row="2">
                                 <list:DeviceList />
-                            </StackPanel>
+                            </Grid>
                         </Grid>
 
                         <StackPanel Width="350" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1">

@@ -85,7 +85,7 @@
                 <TextBox x:Name="MessagesTextBox"
                      Loaded="MessagesTextBox_Loaded"
                      Grid.Column="1"
-                     FontSize="20"
+                     FontSize="15"
                      Text="{Binding AllMessages, Mode=OneWay}"
                      TextWrapping="Wrap"
                      VerticalScrollBarVisibility="Auto"

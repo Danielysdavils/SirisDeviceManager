@@ -65,8 +65,8 @@ namespace SirisDeviceManager.View.UserControls.Device.Panel.DeviceManager {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/SirisDeviceManager;V1.0.0.0;component/view/usercontrols/device/panel/devicemanag" +
-                    "er/toolbar.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/SirisDeviceManager;component/view/usercontrols/device/panel/devicemanager/toolba" +
+                    "r.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\..\..\..\View\UserControls\Device\Panel\DeviceManager\ToolBar.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

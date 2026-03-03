@@ -10,11 +10,11 @@
              >
     <Grid>
         <ListBox 
-            Height="800"
             Panel.ZIndex="0" 
             DataContext="{Binding DeviceViewModel.DevicePanelViewModel.DeviceListViewModel}"
             ItemsSource="{Binding Devices}"
-            ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            ScrollViewer.VerticalScrollBarVisibility="Auto">
 
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
